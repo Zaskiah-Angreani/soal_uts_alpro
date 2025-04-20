@@ -1,1 +1,93 @@
-//Kerjakan soal nomor 1 disini (Hapus komentar ini)
+#include <iostream>
+#include <string>
+using namespace std;
+
+// Fungsi untuk mengecek tipe kartu dan panjang validnya
+bool isValidType(const string& nomor, string& jenis) {
+    int len = nomor.length();
+    if (len == 14 && nomor.substr(0, 2) == "65") {
+        jenis = "Kartu NUSANTARA";
+        return true;
+    } else if (len == 16 && (nomor.substr(0, 2) == "77" || nomor.substr(0, 2) == "78")) {
+        jenis = "Kartu GARUDA";
+        return true;
+    } else if (len == 15 && nomor.substr(0, 2) == "91") {
+        jenis = "Kartu MERDEKA";
+        return true;
+    }
+    jenis = "Tidak dikenal";
+    return false;
+}
+
+// Fungsi validasi menggunakan Algoritma Validasi Nusantara
+bool validasiNusantara(const string& nomor) {
+    int total = 0;
+    int panjang = nomor.length();
+
+    for (int i = panjang - 2; i >= 0; i -= 2) {
+        int digit = nomor[i] - '0';
+        int kali = digit * 2;
+        if (kali > 9)
+            kali = (kali / 10) + (kali % 10);
+        total += kali;
+    }
+
+    // Tambah digit yang tidak dikali
+    for (int i = panjang - 1; i >= 0; i -= 2) {
+        total += nomor[i] - '0';
+    }
+
+    return (total % 10 == 0);
+}
+
+int main() {
+    string nomor;
+    cout << "Masukkan nomor kartu digital: ";
+    cin >> nomor;
+
+    string jenis;
+    if (!isValidType(nomor, jenis)) {
+        cout << "Nomor kartu tidak valid: jenis kartu tidak dikenali.\n";
+        return 0;
+    }
+
+    cout << "Jenis kartu: " << jenis << endl;
+    if (validasiNusantara(nomor)) {
+        cout << "Status: Nomor kartu VALID\n";
+    } else {
+        cout << "Status: Nomor kartu TIDAK VALID\n";
+    }
+
+    return 0;
+}/*Algoritma Validasi Kartu Digital
+Input:`nomor` berupa string angka (digit)  
+Output:Menampilkan jenis kartu dan status valid atau tidak valid
+1. Input Nomor Kartu
+- Minta pengguna memasukkan nomor kartu digital sebagai string.
+2. Cek Jenis Kartu
+- Ambil 2 digit pertama dan panjang string.
+- Jika:
+  - Panjang 14 dan awalan "65" → Kartu NUSANTARA
+  - Panjang 16 dan awalan "77" atau "78" → Kartu GARUDA
+  - Panjang 15 dan awalan "91" → Kartu MERDEKA
+- Jika tidak cocok: tampilkan "jenis kartu tidak dikenali", program berhenti
+- 3. Validasi Menggunakan Algoritma Validasi Nusantara
+Langkah 1:
+- Mulai dari digit ke-2 dari belakang(indeks `panjang - 2`) dan lompat ke kiri setiap 2 digit.
+- Kalikan setiap digit tersebut dengan 2.
+- Jika hasil > 9, jumlahkan digit hasil tersebut (misal: 2 × 6 = 12 → 1 + 2 = 3).
+- Simpan dan jumlahkan hasilnya ke `total_kali`.
+
+Langkah 2:
+- Ambil digit yang tidak dikalikan, mulai dari digit paling belakang (indeks `panjang - 1`) lompat 2 ke kiri.
+- Jumlahkan semua digit ini ke `total_non_kali`.
+Langkah 3:
+- Hitung `total = total_kali + total_non_kali`.
+
+Langkah 4:
+- Jika `total % 10 == 0`, maka kartu VALID
+- Jika tidak, maka kartu TIDAK VALID
+4. Output
+- Tampilkan:
+  - Jenis kartu
+  - Status valid / tidak valid*/
