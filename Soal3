@@ -1,1 +1,81 @@
-//Kerjakan soal nomor 3 disini (Hapus komentar ini)
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main () {
+    int kodeTransaksi, kodeHari, kodeLoyalitas;
+    long jumlahBelanja;
+    int poinPerUnit = 0;
+    string jenisHari, jenisPelanggan;
+
+    cout << "Masukkan kode transaksi: ";
+    cin >> kodeTransaksi;
+
+     kodeHari = kodeTransaksi /1000000; // menunjukkan kode hari (digit 1-2)
+     kodeLoyalitas = (kodeTransaksi / 10000) % 100; // menunjukkan kode loyalitas (digit 3-4)
+     jumlahBelanja = kodeTransaksi % 10000; // menunjukkan jumlah belanjaan (digit 5-8)
+
+    // memastikan kode hari
+    if (kodeHari < 1 || kodeHari > 3) {
+        cout << "Wah, sepertinya kode hari yang kamu masukkan salah.\n";
+    }
+     // memastikan kode loyalitas 
+     if (kodeLoyalitas < 1 || kodeLoyalitas > 3) {
+        cout << "Maaf, kode loyalitas ini tidak valid.\n";
+     }
+
+    int totalBelanja = jumlahBelanja * 100000; // agar jumlah belanja terhitung ke dalam rupiah
+
+    //menentukan jenis hari
+    if (kodeHari == 1) jenisHari = "Hari Kerja";
+    else if (kodeHari == 2) jenisHari = "Akhir Pekan";
+    else if (kodeHari == 3) jenisHari = "Hari Libur Nasional";
+
+    //menentukan jenis pelanggan
+    if (kodeLoyalitas == 1) {
+        jenisPelanggan = "Pelanggan Biasa";
+        if (kodeHari == 1) poinPerUnit = 1;
+        else if (kodeHari == 2) poinPerUnit = 2;
+        else poinPerUnit = 3;
+    } else if(kodeLoyalitas == 2) {
+        jenisPelanggan = "Member Silver";
+        if (kodeHari == 1) poinPerUnit = 2;
+        else if (kodeHari == 2) poinPerUnit = 3;
+        else poinPerUnit = 5; 
+    } else if (kodeLoyalitas == 3) {
+        jenisPelanggan = "Member Gold";
+        if (kodeHari == 1) poinPerUnit = 3;
+        else if (kodeHari == 2) poinPerUnit = 5;
+        else poinPerUnit = 7;
+}
+    int totalPoin = jumlahBelanja * poinPerUnit; // menghitung total poin
+
+    // untuk menampilkan output
+    cout << "Jenis Hari: " << jenisHari << endl;
+    cout << "Jenis Pelanggan: " << jenisPelanggan << endl;
+    cout << "Jumlah Belanja: " << totalBelanja << endl;
+    cout << "Total poin : " << totalPoin << endl;
+
+return 0;
+}
+
+/* 1. Mulai 
+    2. Masukkan kodeTransaksi.
+    3. Ambil data dari kodeTransaksi:
+       - 2 digit pertama -> kodeHari
+       - 2 digit berikutnya -> kodeLoyalitas
+       - 4 digit terakhir -> jumlahBelanja
+    4. Validasi kodeHari dan kodeLoyalitas:
+    Jika tidak valid, tampilkan pesan kesalahan.
+    5. Hitung totalBelanja = jumlahBelanja × 100000
+    6. Tentukan jenisHari berdasarkan kodeHari:
+       - 1 = Hari Kerja
+       - 2 = Akhir Pekan
+       - 3 = Hari Libur Nasional
+    7. Tentukan jenisPelanggan dan poinPerUnit berdasarkan kodeLoyalitas dan kodeHari:
+       - Pelanggan Biasa (kode 1): 1/2/3 poin
+       - Member Silver (kode 2): 2/3/5 poin
+       - Member Gold (kode 3): 3/5/7 poin
+    8. Hitung totalPoin = jumlahBelanja × poinPerUnit
+    9. Tampilkan: Jenis Hari, jenis Pelanggan, jumlah Belanja, total Poin
+    10. Selesai*/
