@@ -1,1 +1,71 @@
-//Kerjakan soal nomor 4 disini (Hapus komentar ini)
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n, poinA = 0, poinB = 0;
+    int winA = 0, winB = 0;
+    string hasil;
+
+    cout << "Masukkan jumlah babak: ";
+    cin >> n;
+    cout << "Masukkan hasil pertandingan: ";
+    cin >> hasil;
+
+    for (int i = 0; i < n; ++i) {
+        if (hasil[i] == 'A') {
+            poinA += 3;
+            winA++;
+            winB = 0;
+        } else if (hasil[i] == 'B') {
+            poinB += 3;
+            winB++;
+            winA = 0;
+        } else if (hasil[i] == 'C') {
+            poinA += 1;
+            poinB += 1;
+            winA = 0;
+            winB = 0;
+        }
+
+        if (winA == 3) {
+            poinA += 2;
+            winA = 0;
+        }
+        if (winB == 3) {
+            poinB += 2;
+            winB = 0;
+        }
+    }
+
+    cout << "Poin A: " << poinA << endl;
+    cout << "Poin B: " << poinB << endl;
+
+    if (poinA > poinB) {
+        cout << "Pemenangnya adalah pemain A" << endl;
+    } else if (poinB > poinA) {
+        cout << "Pemenangnya adalah pemain B" << endl;
+    } else {
+        cout << "Hasil pertandingan Seri!" << endl;
+    }
+
+    return 0;
+}
+
+
+//algoritma penyelesaian program soal 4
+//1.pada program pendeklarasian variabel yaitu n,poinA,poinB,winA,winB disimpan dalam bentuk integer dan hasil disimpan dalam bentuk string
+//2.user diminta untuk menginput jumlah pertandingan yang disimpan dalam n dan hasil pertandingan disimpan dalam hasil
+//3.masuk ke proses perhitungan skor dengan perulangan yaitu mengecek satu persatu pertandingan 
+//4.lalu masuk keproses kondisi dimana kalau hasil babak ke i adalah 'A' berarti pemain A menang di babak itu dan mendapatkan 3 point dan winA(jumlah kemenangan beruntun A) ditambah 1
+//5.apabila hasilnya 'B' berarti pemain B menang maka pemain B mendapatkan 3 point dab winB(jumah kemenangan beruntun pemain B) akan ditambah 1
+//6.namun apabila hasil i adalah 'C' maka pertandingan seri dan pemain A serta pemain B mendapatkan masing-masing 1 point
+//7.lalu pengecekan kemenangan 3 kali beruntun apabila winA= 3 (bermaksud bahwa A menang 3X beruntun) maka A mendapat tambahan 2 point 
+//8.namun apabila winB=3 (bermaksud bahwa B menang 3X beruntun) maka B mendapatkan tambahan 2 point 
+//9.setelah perhitungan selesai program akan melanjutkan untuk menampilkan total point akhir dari masing masing pemain
+//10.terakhir program akan menentukan pemenang dengan operator kondisi dari banyak nya point yang diperoleh 
+    //Jika poinA lebih besar → Pemain A menang.
+    //Jika poinB lebih besar → Pemain B menang.
+    //Jika sama → Hasil pertandingan seri. 
+
+
